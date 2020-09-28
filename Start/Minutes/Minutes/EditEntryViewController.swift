@@ -1,6 +1,8 @@
 import Foundation
 import UIKit
-import AppCenterCrashes
+import AppCenterAnalytics
+//import AppCenterCrashes
+
 
 class EditEntryViewController: UIViewController
 {
@@ -9,16 +11,19 @@ class EditEntryViewController: UIViewController
     
     var entry: Entry? = nil
     
-    override func viewDidLoad()
-    {
+    override func viewDidLoad() {
         let saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(EditEntryViewController.onSave))
 
         navigationItem.rightBarButtonItem = saveButton
 
-        if entry == nil
-        {
+        if entry == nil {
             entry = Entry()
             self.title = "Add New Entry"
+        } else {
+            let date = entry!.createdDate.timeIntervalSinceNow * -1
+            let interval = String(format: "%.0f", date)
+            let property = ["id":entry!.id, "time elapsed": interval]
+            MSAnalytics.trackEvent("EditEntry", withProperties: property)
         }
         
         titleTextField.text = entry?.title
@@ -27,7 +32,7 @@ class EditEntryViewController: UIViewController
 
     @objc func onSave(_ sender: UIBarButtonItem)
     {
-        MSCrashes.generateTestCrash()
+        //MSCrashes.generateTestCrash()
         entry?.title = titleTextField.text!
         entry?.content = contentTextView.text!
         
