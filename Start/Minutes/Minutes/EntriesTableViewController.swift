@@ -52,7 +52,7 @@ extension EntriesTableViewController {
 
             let entry = AppDelegate.entries.read()[indexPath.row]
             AppDelegate.entries.delete(entry)
-
+            tableView.reloadData()
             completion(true)
         })
         
