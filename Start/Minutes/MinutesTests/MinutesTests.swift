@@ -10,7 +10,6 @@ import XCTest
 @testable import Minutes
 
 class MinutesTests: XCTestCase {
-    
     var entryUnderTest: Entry!
 
     override func setUp() {
